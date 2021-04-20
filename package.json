@@ -47,5 +47,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://103.50.205.41:8081/api/v1"
+  "proxy": "http://103.50.205.100:8081/api/v1"
 }

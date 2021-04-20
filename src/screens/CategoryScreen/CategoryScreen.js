@@ -58,13 +58,13 @@ const NewsDetailList = ({ history }) => {
     },
     {
       title: "Зураг",
-      dataIndex: "photo",
-      key: "photo",
+      dataIndex: "image",
+      key: "image",
       render: (record) => (
         <Image
-          width={100}
-          height={80}
-          src={`http://192.168.43.152:5000/uploads/no-photo.jpg}`}
+          width={80}
+          height={60}
+          src={`http://103.50.205.100:8081/uploads/${record}`}
         />
       ),
     },

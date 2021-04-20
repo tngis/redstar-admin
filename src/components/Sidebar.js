@@ -8,7 +8,8 @@ import {
   ClusterOutlined,
   BorderlessTableOutlined,
   UserSwitchOutlined,
-  PaperClipOutlined
+  PaperClipOutlined,
+  OrderedListOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
 import SERVER_SETTINGS from "../utils/serverSettings";
@@ -63,7 +64,10 @@ const SideBar = ({ history }) => {
                           </Link></Menu.Item>
             ))}
         </SubMenu>
-        <Menu.Item key="11" icon={<UserSwitchOutlined />}>
+        <Menu.Item key="11" icon={<OrderedListOutlined />}>
+          Хийгдсэн ажилууд
+        </Menu.Item>
+        <Menu.Item key="12" icon={<UserSwitchOutlined />}>
           Админууд
         </Menu.Item>
       </Menu>

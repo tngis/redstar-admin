@@ -1,26 +1,43 @@
 import React, { useState, useEffect } from "react";
-import { Table, Space, Button, Popconfirm, Image, message, Spin, Tag } from "antd";
+import { Link } from 'react-router-dom';
+import { Tooltip, Table,Typography, Space, Button, Popconfirm, InputNumber, message, Input, Tag, Modal, Form } from "antd";
 import { withRouter } from "react-router-dom";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined , ExclamationCircleOutlined} from "@ant-design/icons";
 import axios from "axios";
 import SERVER_SETTINGS from "../../utils/serverSettings";
-
+const { Title } = Typography;
 const NewsDetailList = ({ history }) => {
   const [data, setData] = useState([]);
+  const [visible, setVisible] = useState();
+  const [form] = Form.useForm();
+  const onFinish = async (values) => {
+    await axios.post(SERVER_SETTINGS.getSectors.url, values)
+      .then(() => {
+        setVisible(false);
+        message.success("Салбар амжилттай нэмлээ");
+        fetchSectors();
+      })
+      .catch(err => message.error(err.response.data.error))
+  };
   const fetchSectors = async () => {
     await axios.get(SERVER_SETTINGS.getSectors.url).then(res => setData(res.data.data))
   }
 
-  const handleClick = (id) => {
+  const handleClick = async (id) => {
     message.loading({ content: "Боловсруулж байна ...", duration: 1 });
-    
+    await axios.delete(`${SERVER_SETTINGS.getSectors.url}/${id}`)
+      .then(() => {
+        message.success("Салбар амжилттай устагдлаа");
+        fetchSectors();
+      })
+      .catch(() => message.error("Амжилтгүй боллоо"))
   };
   const setEdit = (record) => {
     
   };
   const columns = [
     { 
-      title: "Ангилал", 
+      title: "Нэр", 
       dataIndex: "name", 
       key: "name",
     },
@@ -76,13 +93,89 @@ const NewsDetailList = ({ history }) => {
 
   useEffect(() => {
     fetchSectors();
-  })
+  }, [])
   return (
+    <div>
+    <div style={{ marginBottom: 20 }}>
+    <div style={{ float: "left", marginLeft: 20 }}>
+      <Title level={4}>
+        Салбар удирдах
+        <Tooltip
+          placement="right"
+          title="Салбар удирдах хэсэг"
+        >
+          <ExclamationCircleOutlined
+            style={{ marginLeft: 8, color: "#ffbb96" }}
+          />
+        </Tooltip>
+      </Title>
+    </div>
+
+    <div style={{ float: "right", marginBottom: 20 }}>
+      <Button type="primary">
+        <Link onClick={() => setVisible(true)}>Салбар нэмэх</Link>
+      </Button>
+    </div>
+    <Modal
+        title="Салбар нэмэх"
+        visible={visible}
+        onCancel={() => setVisible(false)}
+        footer={null}
+        >
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+          ref={form}
+        >
+          <Form.Item
+            label="Салбарын нэр"
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: "Салбарын нэр бичих хэсэг хоосон байна",
+              },
+            ]}
+            tooltip="Заавар оруулах"
+          >
+            <Input placeholder="Салбарын нэр" />
+          </Form.Item>
+          <Form.Item
+            label="Хаяг"
+            name="address"
+            rules={[
+              {
+                required: true,
+                message: "Хаяг бичих хэсэг хоосон байна",
+              },
+            ]}
+            tooltip="Заавар оруулах"
+          >
+            <Input placeholder="Хаяг" />
+          </Form.Item>
+          <Form.Item label="Утасны дугаар" name="phoneNumber" rules={[
+              {
+                required: true,
+                message: 'Утасны дугаар аа оруулан уу',
+              },
+            ]}>
+            <InputNumber min={0} style={{ width: 200 }} />
+          </Form.Item>
+          <Form.Item>
+            <br />
+            <Button type="primary" htmlType="submit">
+              Хадгалах
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+  </div>
     <Table
       columns={columns}
       dataSource={data}
       scroll
     />
+    </div>
   );
 };
 

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { Layout, Avatar, Badge, Dropdown, Menu, message, Button } from "antd";
 import {
   UserOutlined,
   SettingOutlined,
   LogoutOutlined,
+  RedoOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
 import ServerSettings from "../utils/serverSettings";
@@ -46,6 +47,9 @@ const Navbar = ({history}) => {
   return (
     <Header className="site-layout-background" style={{ padding: 0, right: 0 }}>
       <div style={{ textAlign: "right", marginRight: 50 }}>
+        <a href="http://localhost:8082" style={{ marginRight: 20 }}>
+          <Avatar shape="circle" size={24} icon={<RedoOutlined />} />
+        </a>
         <span style={{ marginRight: 20 }}>
           <Badge count={1} size={8}>
             <Avatar shape="circle" size={24} icon={<UserOutlined />} />
