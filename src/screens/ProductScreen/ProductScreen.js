@@ -22,7 +22,17 @@ const ProductScreen = ({ history }) => {
   const SubData = ({ record }) => {
     const subdata = [];
     const columns = [
-      { title: 'Зураг', dataIndex: 'thumbnail', key: 'thumbnail' },
+      { 
+        title: 'Зураг', 
+        dataIndex: 'thumbnail', 
+        key: 'thumbnail', 
+        render: (record) => (
+        <Image
+          width={80}
+          height={60}
+          src={`http://103.50.205.100:8081/uploads/${record}`}
+        />
+      ), },
       { title: 'Хэмжээ', dataIndex: 'size', key: 'size' },
       {
         title: 'Үнэ',

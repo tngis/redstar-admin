@@ -6,7 +6,7 @@ import { DeleteOutlined, EditOutlined , ExclamationCircleOutlined} from "@ant-de
 import axios from "axios";
 import SERVER_SETTINGS from "../../utils/serverSettings";
 const { Title } = Typography;
-const NewsDetailList = ({ history }) => {
+const SectorScreen = ({ history }) => {
   const [data, setData] = useState([]);
   const [visible, setVisible] = useState();
   const [form] = Form.useForm();
@@ -83,7 +83,7 @@ const NewsDetailList = ({ history }) => {
               <DeleteOutlined />
             </Button>
           </Popconfirm>
-          <Button onClick={() => setEdit(record)} type="default">
+          <Button onClick={() =>  history.push(`/sector/${record._id}/edit`)} type="default">
             <EditOutlined />
           </Button>
         </Space>
@@ -179,4 +179,4 @@ const NewsDetailList = ({ history }) => {
   );
 };
 
-export default withRouter(NewsDetailList);
+export default withRouter(SectorScreen);

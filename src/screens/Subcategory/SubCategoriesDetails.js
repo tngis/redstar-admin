@@ -77,7 +77,7 @@ const SubCategoriesDetails = ({ history, match }) => {
             </Button>
           </Popconfirm>
           <Button type="default">
-            <Link to={`/category/${record._id}/edit`}><EditOutlined /></Link>
+            <Link to={`/subcategories/${record._id}/edit`}><EditOutlined /></Link>
           </Button>
         </Space>
       ),
@@ -92,6 +92,7 @@ const SubCategoriesDetails = ({ history, match }) => {
     upData.name = values.name;
     await axios.post(`${SERVER_SETTINGS.getCategories.url}/${match.params.id}/subcategory`, upData)
       .then(res => {
+        setVisible(false);
         message.success("Ангилалыг амжилттай нэмлээ");
         fetchSubCategories();
       })

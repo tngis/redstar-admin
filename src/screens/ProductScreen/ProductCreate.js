@@ -58,6 +58,39 @@ const ProductCreate = ({ history }) => {
       layout="vertical"
       onFinish={onFinish}
     >
+      <Form.Item
+        name="category"
+        label="Ангилал"
+        rules={[
+          {
+            required: true,
+            message: 'Ангилалыг сонгоно уу',
+          },
+        ]}
+      >
+        <Select placeholder="Бүтээгдэхүүний ангилал" onChange={onCategoryChange}>
+          { categories.map(category => (
+            <Option value={category?.id}>{category?.name}</Option>
+          )) }
+        </Select>
+      </Form.Item>
+      <Form.Item
+        name="subcategories"
+        label="Дэд ангилал"
+        rules={[
+          {
+            required: true,
+            message: 'Дэд ангилалыг оруулан уу',
+            type: 'array',
+          },
+        ]}
+      >
+        <Select mode="multiple" placeholder="Дэд ангилал">
+          {subcategories.map(sub => (
+            <Option value={sub?.id}>{sub?.name}</Option>
+          ))}
+        </Select>
+      </Form.Item>
       <Form.Item 
         label="Бүтээгдэхүүний код" 
         name="code"
@@ -84,22 +117,6 @@ const ProductCreate = ({ history }) => {
       >
         <Input placeholder="нэр" />
       </Form.Item>
-      <Form.Item
-        name="category"
-        label="Ангилал"
-        rules={[
-          {
-            required: true,
-            message: 'Ангилалыг сонгоно уу',
-          },
-        ]}
-      >
-        <Select placeholder="Бүтээгдэхүүний ангилал" onChange={onCategoryChange}>
-          { categories.map(category => (
-            <Option value={category?.id}>{category?.name}</Option>
-          )) }
-        </Select>
-      </Form.Item>
       <Form.Item 
         label="Тайлбар"      
         rules={[
@@ -113,7 +130,6 @@ const ProductCreate = ({ history }) => {
           data="<p></p>"
           onChange={ ( event, editor ) => {
             const data = editor.getData();
-            console.log( { data } );
         } }
         />
       </Form.Item>
@@ -136,23 +152,6 @@ const ProductCreate = ({ history }) => {
           },
         ]}>
         <InputNumber min={0} />
-      </Form.Item>
-      <Form.Item
-        name="subcategories"
-        label="Дэд ангилал"
-        rules={[
-          {
-            required: true,
-            message: 'Дэд ангилалыг оруулан уу',
-            type: 'array',
-          },
-        ]}
-      >
-        <Select mode="multiple" placeholder="Дэд ангилал">
-          {subcategories.map(sub => (
-            <Option value={sub?.id}>{sub?.name}</Option>
-          ))}
-        </Select>
       </Form.Item>
       <Form.Item
         name="status"

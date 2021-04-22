@@ -32,14 +32,7 @@ const ProductEdit = ({ history }) => {
   }, [productId, setCurrent])
 
   const onFinish = async (values) => {
-    console.log(values.subcategories);
     values.status = values.status === true ? 'published' : 'draft';
-    await axios.post(`${SERVER_SETTINGS.getCategories.url}/${values.category}/products`, values)
-      .then(res => {
-        message.success("Амжилттай нэмэгдлээ:)");
-        history.push("/products");
-      })
-      .catch(err => message.error(err.response.data.error))
   }
   return current && ( 
     <Form
@@ -51,12 +44,6 @@ const ProductEdit = ({ history }) => {
         label="Бүтээгдэхүүний код" 
         name="code"
         required
-        rules={[
-          {
-            required: true,
-            message: 'Бүтээгдэхүүний кодыг оруулна уу',
-          },
-        ]}
         >
         <Input placeholder="Код" defaultValue={current?.code} />
       </Form.Item>
@@ -64,24 +51,12 @@ const ProductEdit = ({ history }) => {
         label="Бүтээгдэхүүний нэр"
         name="name"
         required
-        rules={[
-          {
-            required: true,
-            message: 'Бүтээгдэхүүний нэрийг оруулна уу',
-          },
-        ]}
       >
         <Input placeholder="нэр" defaultValue={current?.name} />
       </Form.Item>
       <Form.Item
         name="category"
         label="Ангилал"
-        rules={[
-          {
-            required: true,
-            message: 'Ангилалыг сонгоно уу',
-          },
-        ]}
       >
         <Select placeholder="Бүтээгдэхүүний ангилал" onChange={onCategoryChange} defaultValue={current?.category?.name} >
           { categories.map(category => (
@@ -90,54 +65,30 @@ const ProductEdit = ({ history }) => {
         </Select>
       </Form.Item>
       <Form.Item 
-        label="Тайлбар"      
-        rules={[
-          {
-            required: true,
-            message: 'Ангилалыг сонгоно уу',
-          },
-        ]}>
+        label="Тайлбар">
         <CKEditor
           editor={ ClassicEditor }
           data="<p></p>"
           onChange={ ( event, editor ) => {
             const data = editor.getData();
-            console.log( { data } );
+
         } }
         />
       </Form.Item>
-      <Form.Item label="Хэмжээ" name="size"         
-        rules={[
-          {
-            required: true,
-            message: 'Хэмжээг оруулана уу',
-          },
-        ]}>
+      <Form.Item label="Хэмжээ" name="size" >
         <Input placeholder="Бүтээгдэхүүний хэмжээ" defaultValue={current?.size}/>
       </Form.Item>
       <Form.Item label="Тоо ширхэг" name="count" required>
         <Input placeholder="Бүтээгдэхүүний тоо ширхэг" defaultValue={current?.count} />
       </Form.Item>
-      <Form.Item label="Үнэ" name="price" required rules={[
-          {
-            required: true,
-            message: 'Үнийг оруулан уу',
-          },
-        ]}>
+      <Form.Item label="Үнэ" name="price">
         <InputNumber min={0} defaultValue={current?.price} />
       </Form.Item>
       <Form.Item
         name="subcategories"
         label="Дэд ангилал"
-        rules={[
-          {
-            required: true,
-            message: 'Дэд ангилалыг оруулан уу',
-            type: 'array',
-          },
-        ]}
       >
-        <Select mode="multiple" placeholder="Дэд ангилал">
+        <Select mode="multiple" placeholder="Дэд ангилал" defaultValue={current?.subcategories.map(sub => sub.name)}>
           {subcategories.map(sub => (
             <Option value={sub?.id}>{sub?.name}</Option>
           ))}
@@ -153,7 +104,7 @@ const ProductEdit = ({ history }) => {
         name="sectors"
         label="Худалдаж байгаа салбар"
       >
-        <Select mode="multiple" placeholder="Бүтээгдэхүүний салбар">
+        <Select mode="multiple" placeholder="Бүтээгдэхүүний салбар" defaultValue={current?.sectors}>
           { sectors.map(sector => (
             <Option value={sector?.id}>{sector?.name}</Option>
           )) }

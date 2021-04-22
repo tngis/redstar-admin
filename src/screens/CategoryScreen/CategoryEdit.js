@@ -27,14 +27,20 @@ const CategoryEdit = ({ match, history }) => {
     } else {
       upData.name = current.name;
     }
+    if (!isNull(values.title)) {
+      upData.title = values.title;
+    } else {
+      upData.title = current.title;
+    }
 
     if (!isNull(values.switch)) {
       upData.status = values.switch ? 'published' : 'draft';
     } else {
       upData.status = current.status;
     }
+
     axios.put(`${SERVER_SETTINGS.getCategories.url}/${match.params.id}`, upData).then(res => {
-      message.success("Амжилттай шинэчлэл хийлээ")
+      message.success("Амжилттай шинэчлэл хийлээ");
       history.push("/categories");
     })
   };
@@ -53,14 +59,19 @@ const CategoryEdit = ({ match, history }) => {
         onFinish={onFinish}
       >
         <Form.Item label="Ангилал нэр" name="name" tooltip="This is a required field">
-          {console.log(current.name)}
           <Input
             placeholder="Гарчиг"
             defaultValue={current.name}
           />
         </Form.Item>
+        <Form.Item label="Ангилал тайлбар" name="title" tooltip="This is a required field">
+          <Input
+            placeholder="Гарчиг"
+            defaultValue={current.title}
+          />
+        </Form.Item>
         <Form.Item name="switch" label="Төлөв">
-        <Switch checkedChildren="идэвхтэй" unCheckedChildren="идэвхгүй" defaultChecked={ current.status === 'published'}/>
+        <Switch defaultChecked={ current.status === 'published'} checkedChildren="нийтлэх" unCheckedChildren="нуух"/>
       </Form.Item>
         <Form.Item>
           <br />

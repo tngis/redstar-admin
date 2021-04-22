@@ -42,7 +42,6 @@ export const register = (data, history) => (dispatch) => {
   axios
     .post("/api/auth/register", data, config)
     .then((res) => {
-      console.log(res.data.data);
       message.success("Админ амжилттай нэмлээ");
       history.push("/userdetails");
     })

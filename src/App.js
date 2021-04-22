@@ -17,6 +17,9 @@ import SubCategories from "./screens/Subcategory/SubCategories";
 import SubCategoriesDetails from "./screens/Subcategory/SubCategoriesDetails";
 import ProductCreate from "./screens/ProductScreen/ProductCreate";
 import ProductEdit from "./screens/ProductScreen/ProductEdit";
+import IntroScreen from "./screens/Intro/IntroScreen";
+import IntroCreate from "./screens/Intro/IntroCreate";
+import IntroEdit from "./screens/Intro/IntroEdit";
 const { Content } = Layout;
 // Check for token
 if (localStorage.jwtToken) {
@@ -52,14 +55,17 @@ const App = () => {
               >
                 <Switch>
                   <Route path="/categories" component={CategoryScreen} />
+                  <Route path="/intros" component={IntroScreen} />
+                  <Route path="/intro/create" component={IntroCreate} />
+                  <Route path="/intro/:id/edit" component={IntroEdit} />
                   <Route path="/category/:id/edit" component={CategoryEdit} />
                   <Route path="/category/:id/subcategories" component={SubCategoriesDetails} />
                   <Route path="/sectors" component={SectorScreen} />
-                  <Route path="/sector/:id" component={SectorDetailScreen} />
+                  <Route path="/sector/:id/edit" component={SectorDetailScreen} />
                   <Route path="/products/create" component={ProductCreate} />
                   <Route path="/products" component={ProductScreen} />
                   <Route path="/product/:productId" component={ProductEdit} />
-                  <Route path="/subcategories/:id" component={SubCategories} />
+                  <Route path="/subcategories/:id/edit" component={SubCategories} />
                 </Switch>
               </div>
             </Content>

@@ -24,6 +24,9 @@ const SERVER_SETTINGS = {
   getProdcuts: {
     url: "/products"
   },
+  getIntros: {
+    url: "/intros"
+  },
 };
 
 export default SERVER_SETTINGS;

@@ -11,12 +11,9 @@ const NewsDetailList = ({ history }) => {
   const [data, setData] = useState([]);
   const [image, setImage] = useState(null);
   const [visible, setVisible] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [form] = Form.useForm();
   const fetchCategories = async () => {
     await axios.get(SERVER_SETTINGS.getCategories.url).then(res => {
       setData(res.data.data);
-      setLoading(false);
     })
   }
   const key = "updatable";
@@ -168,7 +165,6 @@ const NewsDetailList = ({ history }) => {
         <Form
           layout="vertical"
           onFinish={onFinish}
-          ref={form}
         >
           <Form.Item
             label="Ангилалын нэр"
@@ -183,6 +179,19 @@ const NewsDetailList = ({ history }) => {
           >
             <Input placeholder="Ангилалын нэр" />
           </Form.Item>
+          <Form.Item
+            label="Ангилалын тайлбар"
+            name="title"
+            rules={[
+              {
+                required: true,
+                message: "Ангилалын тайлбар бичих хэсэг хоосон байна",
+              },
+            ]}
+            tooltip="This is a required field"
+          >
+            <Input placeholder="Ангилалын тайлбар" />
+          </Form.Item>
           <PhotoUpload setImage={setImage} />
           <Form.Item>
             <br />
@@ -196,6 +205,10 @@ const NewsDetailList = ({ history }) => {
       <Table
         columns={columns}
         dataSource={data}
+        expandable={{
+          expandedRowRender: record => <p style={{ margin: 0 }}>{record.title}</p>,
+          rowExpandable: record => record.name !== 'Not Expandable',
+        }}
         scroll
       />
   </div>

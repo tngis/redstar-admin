@@ -21,12 +21,10 @@ class PhotoUpload extends React.Component {
   };
   componentDidMount() {
     this.setState({ currentImage: this.props.image });
-    console.log(this.state.currentImage);
   }
   handleCancel = () => this.setState({ previewVisible: false });
 
   handlePreview = async (file) => {
-    console.log(file.url);
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
     }
@@ -40,7 +38,6 @@ class PhotoUpload extends React.Component {
   };
 
   handleChange = ({ fileList }) => {
-    console.log(fileList);
     this.setState({ fileList });
     if (fileList[0]) {
       this.props.setImage(fileList[0].originFileObj);
