@@ -27,6 +27,9 @@ const SERVER_SETTINGS = {
   getIntros: {
     url: "/intros"
   },
+  getWorks: {
+    url: "/works"
+  },
 };
 
 export default SERVER_SETTINGS;

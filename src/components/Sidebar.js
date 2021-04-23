@@ -51,7 +51,7 @@ const SideBar = ({ history }) => {
         <Menu.Item key="sub4" icon={<EnvironmentOutlined />} onClick={() => history.push("/sectors")}>
           Салбарууд
         </Menu.Item>
-        <Menu.Item key="11" icon={<OrderedListOutlined />}>
+        <Menu.Item key="11" icon={<OrderedListOutlined />} onClick={() => history.push("/works")}>
           Хийгдсэн ажилууд
         </Menu.Item>
         <Menu.Item key="12" icon={<UserSwitchOutlined />}>

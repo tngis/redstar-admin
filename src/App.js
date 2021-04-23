@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import jwt_decode from 'jwt-decode';
 import { useSelector } from 'react-redux'
 import setAuthToken from './utils/setAuthToken';
@@ -20,6 +20,9 @@ import ProductEdit from "./screens/ProductScreen/ProductEdit";
 import IntroScreen from "./screens/Intro/IntroScreen";
 import IntroCreate from "./screens/Intro/IntroCreate";
 import IntroEdit from "./screens/Intro/IntroEdit";
+import WorkScreen from "./screens/Works/WorkScreen";
+import WorkCreate from "./screens/Works/WorkCreate";
+import WorkEdit from "./screens/Works/WorkEdit";
 const { Content } = Layout;
 // Check for token
 if (localStorage.jwtToken) {
@@ -56,6 +59,9 @@ const App = () => {
                 <Switch>
                   <Route path="/categories" component={CategoryScreen} />
                   <Route path="/intros" component={IntroScreen} />
+                  <Route path="/works" component={WorkScreen} />
+                  <Route path="/work/create" component={WorkCreate} />
+                  <Route path="/work/:id/edit" component={WorkEdit} />
                   <Route path="/intro/create" component={IntroCreate} />
                   <Route path="/intro/:id/edit" component={IntroEdit} />
                   <Route path="/category/:id/edit" component={CategoryEdit} />
