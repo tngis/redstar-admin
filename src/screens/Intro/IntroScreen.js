@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
-import { Tooltip, Table,Typography, Space, Button, Popconfirm, message, Tag } from "antd";
+import { Tooltip, Table,Typography, Space, Button, Popconfirm, message, Tag, Image } from "antd";
 import { withRouter } from "react-router-dom";
 import { DeleteOutlined, EditOutlined , ExclamationCircleOutlined} from "@ant-design/icons";
 import axios from "axios";
@@ -32,6 +32,13 @@ const IntroScreen = ({ history }) => {
       title: "Зураг",
       dataIndex: "image",
       key: "image",
+      render: (record) => (
+        <Image
+          width={80}
+          height={60}
+          src={`http://103.50.205.100:8081/uploads/${record}`}
+        />
+      ),
     },
     {
       title: "Хамаарал",

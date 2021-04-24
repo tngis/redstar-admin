@@ -4,10 +4,12 @@ import { withRouter } from "react-router-dom";
 import { isEmpty, isNull } from "../../validation";
 import axios from "axios";
 import SERVER_SETTINGS from "../../utils/serverSettings";
+import PhotoUpload from '../../components/PhotoUpload';
 
 const CategoryEdit = ({ match, history }) => {
   let upData = new Object();
   const [current, setCurrent] = useState(null);
+  const [image, setImage] = useState(null);
   const fetchCategory = async (id) => {
     await axios.get(`${SERVER_SETTINGS.getCategories.url}/${id}`)
       .then(res => setCurrent(res.data.data))
@@ -16,7 +18,7 @@ const CategoryEdit = ({ match, history }) => {
   useEffect(() => {
     fetchCategory(match.params.id);
   }, [match]);
-  const [form] = Form.useForm();
+
   const onFinish = async (values) => {
     if (isEmpty(values.name)) {
       message.error("Гарчиг оруулах хэсэг хоосон байна");
@@ -39,9 +41,18 @@ const CategoryEdit = ({ match, history }) => {
       upData.status = current.status;
     }
 
-    axios.put(`${SERVER_SETTINGS.getCategories.url}/${match.params.id}`, upData).then(res => {
-      message.success("Амжилттай шинэчлэл хийлээ");
-      history.push("/categories");
+    axios.put(`${SERVER_SETTINGS.getCategories.url}/${match.params.id}`, upData).then(async () => {
+      if(image) {
+        const formData = new FormData();
+        formData.append("file", image);
+        await axios.put(`${SERVER_SETTINGS.getCategories.url}/${match.params.id}/photo`, formData).then(res => {
+          message.success("Амжилттай шинэчлэл хийлээ");
+          history.push("/categories");
+          })
+      }else {
+        message.success("Амжилттай шинэчлэл хийлээ");
+        history.push("/categories");
+      }
     })
   };
 
@@ -51,9 +62,7 @@ const CategoryEdit = ({ match, history }) => {
 
   return current &&
     (
-    
       <Form
-        form={form}
         layout="vertical"
         onFinishFailed={onFinishFailed}
         onFinish={onFinish}
@@ -73,6 +82,7 @@ const CategoryEdit = ({ match, history }) => {
         <Form.Item name="switch" label="Төлөв">
         <Switch defaultChecked={ current.status === 'published'} checkedChildren="нийтлэх" unCheckedChildren="нуух"/>
       </Form.Item>
+      <PhotoUpload image={image || current?.image} setImage={setImage} />
         <Form.Item>
           <br />
           <Button type="primary" htmlType="submit">

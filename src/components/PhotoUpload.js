@@ -61,7 +61,7 @@ class PhotoUpload extends React.Component {
             <Image
               width={105}
               height={90}
-              src={`http://202.70.34.25:3001/uploads/${this.state.currentImage}`}
+              src={`http://103.50.205.100:8081/uploads/${this.state.currentImage}`}
             />
             <div style={{ position: "relative", top: -100, left: 85 }}>
               <Popconfirm
@@ -70,7 +70,7 @@ class PhotoUpload extends React.Component {
               >
                 <Button
                   type="primary"
-                  size={10}
+                  size={5}
                   danger
                   shape="circle"
                   icon={<CloseOutlined />}

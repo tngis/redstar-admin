@@ -3,6 +3,7 @@ import { Form, Input, Button, Switch, InputNumber, Select, message } from 'antd'
 import { useParams, withRouter } from 'react-router-dom';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import PhotoUpload from "../../components/PhotoUpload";
 import axios from 'axios';
 import SERVER_SETTINGS from '../../utils/serverSettings';
 
@@ -14,6 +15,7 @@ const ProductEdit = ({ history }) => {
   const [sectors, setSectors] = useState([]);
   const [subcategories, setSubCategories] = useState([]);
   const [form] = Form.useForm();
+  const [image, setImage] = useState(null);
   const onCategoryChange = (value) => {
     axios.get(`${SERVER_SETTINGS.getSubCategories.url}?category=${value}`)
       .then(res => setSubCategories(res.data.data))
@@ -110,6 +112,7 @@ const ProductEdit = ({ history }) => {
           )) }
         </Select>
       </Form.Item>
+      <PhotoUpload image={image || current?.thumbnail} setImage={setImage} />
       <Form.Item>
         <Button htmlType="submit" type="primary">Хадгалах</Button>
       </Form.Item>

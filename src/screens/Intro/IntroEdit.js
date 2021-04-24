@@ -5,12 +5,14 @@ import { isEmpty, isNull } from "../../validation";
 import axios from "axios";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import PhotoUpload from "../../components/PhotoUpload";
 import SERVER_SETTINGS from "../../utils/serverSettings";
 import { introType } from './IntroCreate';
 const { Option } = Select;
 const IntroEdit = ({ match, history }) => {
   let upData = new Object();
   const [current, setCurrent] = useState(null);
+  const [image, setImage] = useState(null);
   const [desc, setDesc] = useState(null);
   const fetchIntros = async (id) => {
     await axios.get(`${SERVER_SETTINGS.getIntros.url}/${id}`)
@@ -48,10 +50,20 @@ const IntroEdit = ({ match, history }) => {
       upData.status = current.status;
     }
 
-    axios.put(`${SERVER_SETTINGS.getIntros.url}/${match.params.id}`, upData).then(res => {
-      message.success("Мэдээлэл шинэчлэл хийлээ");
-      history.push("/intros");
+    axios.put(`${SERVER_SETTINGS.getIntros.url}/${match.params.id}`, upData).then( async res => {
+      if(image) {
+      const formData = new FormData();
+      formData.append("file", image);
+       await axios.put(`${SERVER_SETTINGS.getIntros.url}/${match.params.id}/photo`, formData).then(res => {
+          message.success("Мэдээлэл шинэчлэл хийлээ");
+          history.push("/intros");
+        })
+      }else {
+        message.success("Мэдээлэл шинэчлэл хийлээ");
+        history.push("/intros");
+      }
     })
+
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -95,6 +107,7 @@ const IntroEdit = ({ match, history }) => {
         <Form.Item name="switch" label="Төлөв">
         <Switch defaultChecked={ current.status === 'published'} checkedChildren="нийтлэх" unCheckedChildren="нуух"/>
       </Form.Item>
+      <PhotoUpload image={image || current?.image} setImage={setImage} />
         <Form.Item>
           <br />
           <Button type="primary" htmlType="submit">

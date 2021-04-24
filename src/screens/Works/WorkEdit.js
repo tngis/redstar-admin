@@ -6,10 +6,12 @@ import { isEmpty, isNull } from "../../validation";
 import axios from "axios";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import PhotoUpload from "../../components/PhotoUpload";
 import SERVER_SETTINGS from "../../utils/serverSettings";
 const WorkEdit = ({ match, history }) => {
   let upData = new Object();
   const [current, setCurrent] = useState(null);
+  const [image, setImage] = useState(null);
   const [desc, setDesc] = useState(null);
   const fetchWorks = async (id) => {
     await axios.get(`${SERVER_SETTINGS.getWorks.url}/${id}`)
@@ -19,7 +21,7 @@ const WorkEdit = ({ match, history }) => {
   useEffect(() => {
     fetchWorks(match.params.id);
   }, [match]);
-  const [form] = Form.useForm();
+
   const dateFormat = 'YYYY-MM-DD';
   const onFinish = async (values) => {
     if (isEmpty(values.title)) {
@@ -47,9 +49,18 @@ const WorkEdit = ({ match, history }) => {
     } else {
       upData.status = current.status;
     }
-    axios.put(`${SERVER_SETTINGS.getWorks.url}/${match.params.id}`, upData).then(res => {
-      message.success("Мэдээлэл шинэчлэл хийлээ");
-      history.push("/works");
+    axios.put(`${SERVER_SETTINGS.getWorks.url}/${match.params.id}`, upData).then(async () => {
+      if(image) {
+        const formData = new FormData();
+        formData.append("file", image);
+        await axios.put(`${SERVER_SETTINGS.getIntros.url}/${match.params.id}/photo`, formData).then(res => {
+          message.success("Мэдээлэл шинэчлэл хийлээ");
+          history.push("/works");
+          })
+      }else {
+        message.success("Мэдээлэл шинэчлэл хийлээ");
+        history.push("/works");
+      }
     })
 
   };
@@ -62,7 +73,6 @@ const WorkEdit = ({ match, history }) => {
     (
     
       <Form
-        form={form}
         layout="vertical"
         onFinishFailed={onFinishFailed}
         onFinish={onFinish}
@@ -91,6 +101,7 @@ const WorkEdit = ({ match, history }) => {
         <Form.Item name="switch" label="Төлөв">
         <Switch defaultChecked={ current.status === 'published'} checkedChildren="нийтлэх" unCheckedChildren="нуух"/>
       </Form.Item>
+      <PhotoUpload image={image || current?.image} setImage={setImage} />
         <Form.Item>
           <br />
           <Button type="primary" htmlType="submit">
