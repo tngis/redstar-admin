@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table, Space, Button, Popconfirm, Image, message, Tag, Tooltip, Typography } from "antd";
 import { withRouter, Link } from "react-router-dom";
+import parser from "html-react-parser"
 import { DeleteOutlined, EditOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
 import SERVER_SETTINGS from "../../utils/serverSettings";
@@ -64,7 +65,11 @@ const ProductScreen = ({ history }) => {
       } },
     ];
     subdata.push(record);
-    return <Table columns={columns} dataSource={subdata} pagination={false} />;
+    return <Table columns={columns} dataSource={subdata} pagination={false} 
+      expandable={{
+      expandedRowRender: record => <p style={{ margin: 0 }}>{parser(record.description || "Not found!!")}</p>,
+      rowExpandable: record => record.name !== 'Not Expandable',
+    }} />;
   };
 
   const columns = [

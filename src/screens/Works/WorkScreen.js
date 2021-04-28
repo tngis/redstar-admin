@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import { DeleteOutlined, EditOutlined , ExclamationCircleOutlined} from "@ant-design/icons";
 import axios from "axios";
 import SERVER_SETTINGS from "../../utils/serverSettings";
+import moment from "moment";
 const { Title } = Typography;
 const WorkScreen = ({ history }) => {
   const [data, setData] = useState([]);
@@ -33,6 +34,11 @@ const WorkScreen = ({ history }) => {
       title: "Огноо",
       dataIndex: "date",
       key: "date",
+      render: (record) => ( 
+        <Tag color="cyan">
+          {moment(record).format('YYYY-MM-DD')}
+        </Tag>
+      )
     },
     {
       title: "Зураг",

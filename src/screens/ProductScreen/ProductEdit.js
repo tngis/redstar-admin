@@ -46,7 +46,9 @@ const ProductEdit = ({ history }) => {
   }, [productId, setCurrent])
 
   const onFinish = async (values) => {
-    values.status = values.status === true ? 'published' : 'draft';
+    if(values.status) {
+      values.status = values.status === true ? 'published' : 'draft';
+    }
     if (isEmpty(values.code)) {
       message.error("Код оруулах хэсэг хоосон байна");
       return false;
@@ -190,7 +192,7 @@ const ProductEdit = ({ history }) => {
         name="status"
         label="Төлөв"
       >
-        <Switch defaultChecked={false} checkedChildren="нийтлэх" unCheckedChildren="нуух"/>
+       <Switch defaultChecked={ current?.status === 'published'} checkedChildren="нийтлэх" unCheckedChildren="нуух"/>
       </Form.Item>
       <Form.Item
         name="sectors"
