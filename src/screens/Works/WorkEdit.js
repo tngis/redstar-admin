@@ -53,7 +53,7 @@ const WorkEdit = ({ match, history }) => {
       if(image) {
         const formData = new FormData();
         formData.append("file", image);
-        await axios.put(`${SERVER_SETTINGS.getIntros.url}/${match.params.id}/photo`, formData).then(res => {
+        await axios.put(`${SERVER_SETTINGS.getWorks.url}/${match.params.id}/photo`, formData).then(res => {
           message.success("Мэдээлэл шинэчлэл хийлээ");
           history.push("/works");
           })

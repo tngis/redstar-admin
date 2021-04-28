@@ -12,6 +12,7 @@ const ProductCreate = ({ history }) => {
   const [sectors, setSectors] = useState([]);
   const [image, setImage] = useState(null);
   const [subcategories, setSubCategories] = useState([]);
+  const [desc, setDesc] = useState("");
   const [form] = Form.useForm();
   const onCategoryChange = (value) => {
     axios.get(`${SERVER_SETTINGS.getSubCategories.url}?category=${value}`)
@@ -30,6 +31,7 @@ const ProductCreate = ({ history }) => {
 
   const onFinish = async (values) => {
     values.status = values.status === true ? 'published' : 'draft';
+    values.description = desc;
     await axios.post(`${SERVER_SETTINGS.getCategories.url}/${values.category}/products`, values)
     .then(async (res) => {
       const { id } = res.data.data;
@@ -130,8 +132,39 @@ const ProductCreate = ({ history }) => {
           data="<p></p>"
           onChange={ ( event, editor ) => {
             const data = editor.getData();
-        } }
+            setDesc(data);
+        }}
         />
+      </Form.Item>
+      <Form.Item label="Насны хязгаар">
+        <Input.Group style={{ display: 'flex' }} >
+        <Form.Item name="age_star" required>
+           <InputNumber style={{ width: 100, textAlign: 'center' }} placeholder="Minimum" />
+        </Form.Item>
+        <Form.Item>
+                <Input
+          className="site-input-split"
+          style={{
+            width: 42,
+            borderLeft: 0,
+            borderRight: 0,
+            pointerEvents: 'none',
+          }}
+          placeholder="-->"
+          disabled
+        />
+        </Form.Item>
+        <Form.Item name="age_end" required>
+          <InputNumber
+            className="site-input-right"
+            style={{
+              width: 100,
+              textAlign: 'center',
+            }}
+            placeholder="Maximum"
+          />
+        </Form.Item>
+      </Input.Group>
       </Form.Item>
       <Form.Item label="Хэмжээ" name="size"         
         rules={[

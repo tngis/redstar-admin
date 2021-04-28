@@ -39,6 +39,15 @@ const ProductScreen = ({ history }) => {
         dataIndex: 'price',
         key: 'price',
       },
+      { title: 'Насны хязгаар', 
+      render: item => {
+        console.log(item)
+        return (
+           <Tag color="cyan">
+            {`${item.age_star}-${item.age_end}`}
+          </Tag>
+          )  
+      }},
       { title: 'Үзэлт', dataIndex: 'viewed', key: 'viewed' },
       { title: 'Тоо ширхэг', dataIndex: 'count', key: 'count' },
       { title: 'Салбар', dataIndex: 'sectors', key: 'sectors', 
