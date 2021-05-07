@@ -51,6 +51,11 @@ const SectorScreen = ({ history }) => {
       dataIndex: "phoneNumber",
       key: "phoneNumber",
     },
+    {
+      title: "Майл хаяг",
+      dataIndex: "email",
+      key: "email",
+    },
     { 
       title: "Төлөв", 
       dataIndex: "status", 
@@ -139,6 +144,19 @@ const SectorScreen = ({ history }) => {
             tooltip="Заавар оруулах"
           >
             <Input placeholder="Салбарын нэр" />
+          </Form.Item>
+          <Form.Item
+            label="И-майл"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "И-майл бичих хэсэг хоосон байна",
+              },
+            ]}
+            tooltip="Заавар оруулах"
+          >
+            <Input placeholder="И-майл" />
           </Form.Item>
           <Form.Item
             label="Хаяг"

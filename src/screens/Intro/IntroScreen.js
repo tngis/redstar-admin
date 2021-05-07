@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import parser from 'html-react-parser';
 import { Link } from 'react-router-dom';
 import { Tooltip, Table,Typography, Space, Button, Popconfirm, message, Tag, Image } from "antd";
 import { withRouter } from "react-router-dom";
@@ -112,10 +113,10 @@ const IntroScreen = ({ history }) => {
     <div style={{ marginBottom: 20 }}>
     <div style={{ float: "left", marginLeft: 20 }}>
       <Title level={4}>
-        Байгуулагын мэдээлэл удирдах хэсэг
+        Байгууллагын мэдээлэл удирдах хэсэг
         <Tooltip
           placement="right"
-          title=" Байгуулагын мэдээлэл удирдах хэсэг"
+          title=" Байгууллагын мэдээлэл удирдах хэсэг"
         >
           <ExclamationCircleOutlined
             style={{ marginLeft: 8, color: "#ffbb96" }}
@@ -134,7 +135,7 @@ const IntroScreen = ({ history }) => {
       columns={columns}
       dataSource={data}
       expandable={{
-        expandedRowRender: record => <p style={{ margin: 0 }}>{record.description}</p>,
+        expandedRowRender: record => <p style={{ margin: 0 }}>{parser(record?.description || 'Мэдээлэл байхгүй байна') }</p>,
         rowExpandable: record => record.name !== 'Not Expandable',
       }}
       scroll

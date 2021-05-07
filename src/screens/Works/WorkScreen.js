@@ -100,10 +100,10 @@ const WorkScreen = ({ history }) => {
     <div style={{ marginBottom: 20 }}>
     <div style={{ float: "left", marginLeft: 20 }}>
       <Title level={4}>
-        Хийгдсэн ажилууд
+        Хийгдсэн ажлууд
         <Tooltip
           placement="right"
-          title="Хийгдсэн ажилуудыг удирдах хэсэг"
+          title="Хийгдсэн ажлуудыг удирдах хэсэг"
         >
           <ExclamationCircleOutlined
             style={{ marginLeft: 8, color: "#ffbb96" }}

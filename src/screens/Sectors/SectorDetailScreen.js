@@ -14,10 +14,19 @@ const SectorDetailScreen = ({ history }) => {
       message.error("Гарчиг оруулах хэсэг хоосон байна");
       return false;
     }
+    if (isEmpty(values.email)) {
+      message.error("Майл хаяг оруулах хэсэг хоосон байна");
+      return false;
+    }
     if (!isNull(values.name)) {
       upData.name = values.name;
     } else {
       upData.name = current.name;
+    }
+    if (!isNull(values.email)) {
+      upData.email = values.email;
+    } else {
+      upData.email = current.email;
     }
     if (!isNull(values.phoneNumber)) {
       upData.phoneNumber = values.phoneNumber;
@@ -61,6 +70,13 @@ const SectorDetailScreen = ({ history }) => {
         tooltip="Заавар оруулах"
       >
         <Input placeholder="Салбарын нэр" defaultValue={current?.name} />
+      </Form.Item>
+      <Form.Item
+        label="И-майл"
+        name="email"
+        tooltip="Заавар оруулах"
+      >
+        <Input placeholder="И-майл" defaultValue={current?.email} />
       </Form.Item>
       <Form.Item
         label="Хаяг"

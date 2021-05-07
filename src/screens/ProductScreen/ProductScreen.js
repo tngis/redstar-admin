@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Table, Space, Button, Popconfirm, Image, message, Tag, Tooltip, Typography } from "antd";
 import { withRouter, Link } from "react-router-dom";
 import parser from "html-react-parser"
-import { DeleteOutlined, EditOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, ExclamationCircleOutlined, FileImageOutlined } from "@ant-design/icons";
 import axios from "axios";
 import SERVER_SETTINGS from "../../utils/serverSettings";
+import ProductImageModal from "./ProductImageModel";
 
 const { Title } = Typography;
 const ProductScreen = ({ history }) => {
   const [data, setData] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [current, setCurrent] = useState(false);
   const fetchProducts = async () => {
     await axios.get(SERVER_SETTINGS.getProdcuts.url).then(res => setData(res.data.data))
   }
@@ -148,6 +151,17 @@ const ProductScreen = ({ history }) => {
               <EditOutlined />
             </Link>
           </Button>
+          <Tooltip
+            placement="top"
+            title="Бүтээгдэхүүний зургийг нэмэх"
+          >
+          <Button type="default" onClick={() => {
+            setVisible(true);
+            setCurrent(record._id);
+          }}>
+            <FileImageOutlined />
+          </Button>
+          </Tooltip>
         </Space>
       ),
     },
@@ -179,6 +193,7 @@ const ProductScreen = ({ history }) => {
         </Button>
       </div>
     </div>
+    <ProductImageModal visible={visible} setVisible={setVisible} current={current} />
     <Table
       columns={columns}
       dataSource={data}
