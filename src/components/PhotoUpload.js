@@ -22,6 +22,7 @@ class PhotoUpload extends React.Component {
   componentDidMount() {
     this.setState({ currentImage: this.props.image });
   }
+  
   handleCancel = () => this.setState({ previewVisible: false });
 
   handlePreview = async (file) => {

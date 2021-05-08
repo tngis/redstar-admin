@@ -1,6 +1,6 @@
 import React from "react";
-import { Upload, Modal } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { Upload, Modal, Image, Popconfirm, Button } from "antd";
+import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -16,7 +16,8 @@ class PhotosUpload extends React.Component {
     previewVisible: false,
     previewImage: "",
     previewTitle: "",
-    fileList: []
+    fileList: [],
+    currentImages: null,
   };
 
   handleCancel = () => this.setState({ previewVisible: false });
@@ -36,7 +37,7 @@ class PhotosUpload extends React.Component {
 
   handleChange = ({ fileList }) => {
     this.setState({ fileList });
-    console.log(fileList);
+    this.props.setUploads(fileList);
   };
 
   render() {
@@ -44,11 +45,38 @@ class PhotosUpload extends React.Component {
     const uploadButton = (
       <div>
         <PlusOutlined />
-        <div style={{ marginTop: 8 }}>Upload</div>
+        <div style={{ marginTop: 8 }}>Зураг оруулах</div>
       </div>
     );
     return (
       <>
+         {this.props.images.length ? (
+          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+              {this.props.images?.map(image => (
+                <div style={{ padding: 10 }}>
+                <Image
+                  width={105}
+                  height={90}
+                  src={`http://192.168.43.152:8081/uploads/${image}`}
+                />
+                 <div style={{ position: "relative", top: -100, left: 85 }}>
+                    <Popconfirm
+                      title="Устгахдаа итгэлтэй байна уу?"
+                      onConfirm={() => this.props.setDeleteImage(image)}
+                    >
+                      <Button
+                        type="primary"
+                        size={3}
+                        danger
+                        shape="circle"
+                        icon={<CloseOutlined />}
+                      />
+                    </Popconfirm>
+                  </div>
+                </div>
+              ))}
+          </div>
+        ): ""}
         <Upload
           action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           listType="picture-card"
@@ -56,7 +84,7 @@ class PhotosUpload extends React.Component {
           onPreview={this.handlePreview}
           onChange={this.handleChange}
         >
-          {fileList.length >= 10 ? null : uploadButton}
+          {fileList.length >= 5 ? null : uploadButton}
         </Upload>
         <Modal
           visible={previewVisible}
