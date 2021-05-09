@@ -52,6 +52,7 @@ const  ProductImageModal = ({ visible, setVisible, current }) => {
           onOk={uploadImageServer}
           onCancel={() => {
             setUploads([]);
+            setImages([]);
             setVisible(false);
           }}
         >

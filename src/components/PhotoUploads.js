@@ -57,7 +57,7 @@ class PhotosUpload extends React.Component {
                 <Image
                   width={105}
                   height={90}
-                  src={`http://192.168.43.152:8081/uploads/${image}`}
+                  src={`http://103.50.205.100:8081/uploads/${image}`}
                 />
                  <div style={{ position: "relative", top: -100, left: 85 }}>
                     <Popconfirm
