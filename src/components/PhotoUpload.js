@@ -1,6 +1,7 @@
 import React from "react";
 import { Upload, Modal, Image, Button, Popconfirm } from "antd";
 import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
+import SERVER_SETTINGS from "../utils/serverSettings";
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -62,7 +63,7 @@ class PhotoUpload extends React.Component {
             <Image
               width={105}
               height={90}
-              src={`http://103.50.205.100:8081/uploads/${this.state.currentImage}`}
+              src={`${SERVER_SETTINGS.apiUrl}/${this.state.currentImage}`}
             />
             <div style={{ position: "relative", top: -100, left: 85 }}>
               <Popconfirm

@@ -37,7 +37,7 @@ const IntroScreen = ({ history }) => {
         <Image
           width={80}
           height={60}
-          src={`http://103.50.205.100:8081/uploads/${record}`}
+          src={`${SERVER_SETTINGS.apiUrl}/${record}`}
         />
       ),
     },
